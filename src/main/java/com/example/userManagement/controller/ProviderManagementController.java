@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Key;
 import java.util.List;
@@ -72,14 +72,26 @@ public class ProviderManagementController {
   }
 
   @PostMapping("/providerByEmail")  // Changed to POST
-  public ResponseEntity<ProviderProfileDTO> getProviderByEmail(@RequestBody Map<String, String> request) {
+  public ResponseEntity<?> getProviderByEmail(@RequestBody Map<String, String> request) {
       String email = request.get("email");
+      logger.info("Provider email lookup request received: {}", email);
+      
       if (email == null || email.isEmpty()) {
-          return ResponseEntity.badRequest().build();
+          logger.warn("Bad request: email is null or empty");
+          return ResponseEntity.badRequest().body("Email is required");
       }
       
-      ProviderProfileDTO profile = providerProfileService.getProviderByEmail(email);
-      return ResponseEntity.ok(profile);
+      try {
+          ProviderProfileDTO profile = providerProfileService.getProviderByEmail(email);
+          logger.info("Provider found for email: {}", email);
+          return ResponseEntity.ok(profile);
+      } catch (ResponseStatusException ex) {
+          logger.error("Error getting provider by email: {}", ex.getMessage());
+          return ResponseEntity.status(ex.getStatusCode()).body(ex.getReason());
+      } catch (Exception ex) {
+          logger.error("Unexpected error in getProviderByEmail", ex);
+          return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred");
+      }
   }
 
    @PostMapping

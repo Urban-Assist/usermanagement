@@ -15,11 +15,17 @@ import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.List;
+import java.util.Optional;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Service
 public class ProviderProfileService {
+
+    private static final Logger logger = LoggerFactory.getLogger(ProviderProfileService.class);
 
     private final ProviderProfileRepository providerProfileRepository;
     private final UserProfileRepository userProfileRepository;
@@ -161,14 +167,40 @@ public class ProviderProfileService {
     }
 
     private ProviderProfileDTO convertToDTO(ProviderProfile profile) {
-        ProviderProfileDTO dto = new ProviderProfileDTO();
-        BeanUtils.copyProperties(profile, dto);
-        return dto;
-    }
+                    ProviderProfileDTO dto = new ProviderProfileDTO();
+            BeanUtils.copyProperties(profile, dto);
+            return dto;
+            }
 
     public ProviderProfileDTO getProviderByEmail(String email) {
-        ProviderProfile provider = providerProfileRepository.findByEmail(email)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Provider not found"));
-        return convertToDTO(provider);
+        logger.info("Getting provider by email: {}", email);
+        try {
+            if (email == null || email.isEmpty()) {
+                logger.error("getProviderByEmail received null or empty email");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email cannot be null or empty");
+            }
+            
+            logger.debug("Calling repository to find provider with email: {}", email);
+            Optional<ProviderProfile> providerOptional = providerProfileRepository.findByEmail(email);
+            
+            if (providerOptional.isEmpty()) {
+                logger.warn("No provider found with email: {}", email);
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Provider not found");
+            }
+            
+            ProviderProfile provider = providerOptional.get();
+            logger.info("Provider found with email: {}, id: {}", email, provider.getId());
+            
+            ProviderProfileDTO dto = convertToDTO(provider);
+            logger.debug("Successfully converted provider to DTO");
+            return dto;
+        } catch (ResponseStatusException rse) {
+            logger.error("ResponseStatusException in getProviderByEmail: {}", rse.getMessage());
+            throw rse;
+        } catch (Exception e) {
+            logger.error("Unexpected error in getProviderByEmail", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, 
+                "An error occurred while retrieving provider: " + e.getMessage());
+        }
     }
 }
