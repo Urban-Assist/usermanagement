@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Key;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -87,11 +88,13 @@ public class ProviderManagementController {
       return ResponseEntity.ok(updatedProfile);
   }
 
-
-  @GetMapping("/test")
-  public ResponseEntity<String> test() {
-      return ResponseEntity.ok("Test successful");
-  }
+@GetMapping("/all")
+public ResponseEntity<Map<String, String>> getAllProviders() {
+    logger.info("GET /api/provider/all endpoint hit!");
+    Map<String, String> response = new HashMap<>();
+    response.put("message", "Hello world");
+    return ResponseEntity.ok(response);
+}
 
   // to do : end point to mark the provider as certified
   @PostMapping("/certify/{id}")
