@@ -70,30 +70,10 @@ public class ProviderManagementController {
       Set<ProviderProfileDTO> providers = providerProfileService.getProvidersByService(service);
       return ResponseEntity.ok(providers);
   }
-
-  @GetMapping("/provider-info")  
-  public ResponseEntity<?> getProviderByEmail(@RequestBody Map<String, String> request) {
-      String email = request.get("email");
-      logger.info("Provider email lookup request received: {}", email);
-      
-      if (email == null || email.isEmpty()) {
-          logger.warn("Bad request: email is null or empty");
-          return ResponseEntity.badRequest().body("Email is required");
-      }
-      
-      try {
-          ProviderProfileDTO profile = providerProfileService.getProviderByEmail(email);
-          logger.info("Provider found for email: {}", email);
-          return ResponseEntity.ok(profile);
-      } catch (ResponseStatusException ex) {
-          logger.error("Error getting provider by email: {}", ex.getMessage());
-          return ResponseEntity.status(ex.getStatusCode()).body(ex.getReason());
-      } catch (Exception ex) {
-          logger.error("Unexpected error in getProviderByEmail", ex);
-          return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred");
-      }
+ @GetMapping("/all")
+  public ResponseEntity<String> getAllProviders() {
+      return ResponseEntity.ok("Hello world");
   }
-
    @PostMapping
   public ResponseEntity<ProviderProfileDTO> createProviderProfile(@RequestParam String service) {
       System.out.println("Received name: " + service);
