@@ -39,7 +39,7 @@ public class ProviderManagementController {
   private String jwtSecret;
 
 
-
+ 
 
   public ProviderManagementController(ProviderProfileService providerProfileService,
                                     ProviderProfileRepository providerProfileRepository) {
@@ -70,7 +70,11 @@ public class ProviderManagementController {
       return ResponseEntity.ok(providers);
   }
 
-
+  @GetMapping("/providerByEmail")
+    public ResponseEntity<ProviderProfileDTO> getProviderByEmail(@RequestParam String email) {
+        ProviderProfileDTO profile = providerProfileService.getProviderByEmail(email);
+        return ResponseEntity.ok(profile);  
+    }
 
 
    @PostMapping
@@ -101,7 +105,7 @@ public class ProviderManagementController {
           String token = authHeader.replace("Bearer ", "");
 
 
-          logger.debug("Request received to certify provider with ID: {}", id);
+          logger.debug("Request received to certify provider with ID: ", id);
           // Use the secret key from application.properties
           byte[] keyBytes = Decoders.BASE64.decode(jwtSecret);
           Key key = Keys.hmacShaKeyFor(keyBytes);

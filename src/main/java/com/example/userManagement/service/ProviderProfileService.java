@@ -165,4 +165,12 @@ public class ProviderProfileService {
         BeanUtils.copyProperties(profile, dto);
         return dto;
     }
+
+    public ProviderProfileDTO getProviderByEmail (String email) {
+        // Fetch the provider profile by email
+        ProviderProfile providerProfile = providerProfileRepository.findByEmail(email)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Provider profile not found"));
+
+        return convertToDTO(providerProfile);
+    }
 }
