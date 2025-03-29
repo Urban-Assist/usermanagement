@@ -166,11 +166,9 @@ public class ProviderProfileService {
         return dto;
     }
 
-    public ProviderProfileDTO getProviderByEmail (String email) {
-        // Fetch the provider profile by email
-        ProviderProfile providerProfile = providerProfileRepository.findByEmail(email)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Provider profile not found"));
-
-        return convertToDTO(providerProfile);
+    public ProviderProfileDTO getProviderByEmail(String email) {
+        ProviderProfile provider = providerProfileRepository.findByEmail(email)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Provider not found"));
+        return convertToDTO(provider);
     }
 }

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Key;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -70,12 +71,16 @@ public class ProviderManagementController {
       return ResponseEntity.ok(providers);
   }
 
-  @GetMapping("/providerByEmail")
-    public ResponseEntity<ProviderProfileDTO> getProviderByEmail(@RequestParam String email) {
-        ProviderProfileDTO profile = providerProfileService.getProviderByEmail(email);
-        return ResponseEntity.ok(profile);  
-    }
-
+  @PostMapping("/providerByEmail")  // Changed to POST
+  public ResponseEntity<ProviderProfileDTO> getProviderByEmail(@RequestBody Map<String, String> request) {
+      String email = request.get("email");
+      if (email == null || email.isEmpty()) {
+          return ResponseEntity.badRequest().build();
+      }
+      
+      ProviderProfileDTO profile = providerProfileService.getProviderByEmail(email);
+      return ResponseEntity.ok(profile);
+  }
 
    @PostMapping
   public ResponseEntity<ProviderProfileDTO> createProviderProfile(@RequestParam String service) {
