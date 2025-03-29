@@ -69,8 +69,9 @@ public class UserProfileService {
     }
 
     public ResponseEntity<?> getUserInfo(String email) {
-         
-        UserProfile userProfile = userProfileRepository.findByEmail(email)
+         System.out.println("Fetching user info for email: " + email);
+        // Fetch the user profile based on the email
+        UserProfile userProfile = userProfileRepository.findByEmailNew(email)
                 .orElseThrow(() -> new RuntimeException("Profile not found"));
         return ResponseEntity.ok(userProfile);
     }
