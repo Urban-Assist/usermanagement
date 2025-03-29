@@ -73,7 +73,7 @@ public class UserProfileService {
         // Use the case-insensitive email lookup method
         UserProfile userProfile = userProfileRepository.findByEmailNew(email)
                 .orElseThrow(() -> new RuntimeException("Profile not found for email: " + email));
-        return ResponseEntity.ok(convertToDTO(userProfile));
+        return ResponseEntity.ok(userProfile);
     }
 
     public UserProfileDTO getUserDetails(String userID) {
