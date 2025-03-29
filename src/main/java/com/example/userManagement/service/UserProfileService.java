@@ -72,11 +72,10 @@ public class UserProfileService {
         return ResponseEntity.ok(userProfile);
     }
 
-    public  ResponseEntity<?> getUserDetails(String userID) {
-        Long userIdLong = Long.parseLong(userID);
-        ProviderProfile userProfile = providerProfileRepository.findById(userIdLong)
+    public UserProfileDTO getUserDetails(String userID) {
+        UserProfile userProfile = userProfileRepository.findById(userID)
                 .orElseThrow(() -> new RuntimeException("Profile not found"));
-        return ResponseEntity.ok(userProfile);
+        return convertToDTO(userProfile);
     }
     private UserProfileDTO convertToDTO(UserProfile userProfile) {
         UserProfileDTO dto = new UserProfileDTO();
