@@ -69,11 +69,11 @@ public class UserProfileService {
     }
 
     public ResponseEntity<?> getUserInfo(String email) {
-         System.out.println("Fetching user info for email: " + email);
-        // Fetch the user profile based on the email
+        System.out.println("Fetching user info for email: " + email);
+        // Use the case-insensitive email lookup method
         UserProfile userProfile = userProfileRepository.findByEmailNew(email)
-                .orElseThrow(() -> new RuntimeException("Profile not found"));
-        return ResponseEntity.ok(userProfile);
+                .orElseThrow(() -> new RuntimeException("Profile not found for email: " + email));
+        return ResponseEntity.ok(convertToDTO(userProfile));
     }
 
     public UserProfileDTO getUserDetails(String userID) {

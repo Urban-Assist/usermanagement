@@ -1,5 +1,6 @@
 package com.example.userManagement.controller;
 
+import com.example.userManagement.dto.EmailRequestDTO;
 import com.example.userManagement.dto.UserProfileDTO;
 import com.example.userManagement.model.ProviderProfile;
 import com.example.userManagement.service.UserProfileService;
@@ -36,7 +37,7 @@ public class UserProfileController {
     }
 
     @PostMapping("/getUserInfo")
-    public ResponseEntity<?> getUserInfo(@RequestBody String email) {
-        return ResponseEntity.ok(userProfileService.getUserInfo(email));
+    public ResponseEntity<?> getUserInfo(@RequestBody EmailRequestDTO request) {
+        return userProfileService.getUserInfo(request.getEmail());
     }
 }
