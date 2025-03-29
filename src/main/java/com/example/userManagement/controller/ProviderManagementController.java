@@ -11,6 +11,7 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -31,6 +32,7 @@ import org.slf4j.LoggerFactory;
 
 @RestController
 @RequestMapping("/api/provider")
+@ComponentScan
 //@RequiredArgsConstructor
 public class ProviderManagementController {
    private static final Logger logger = LoggerFactory.getLogger(ProviderManagementController.class);
