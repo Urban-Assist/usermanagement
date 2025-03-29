@@ -65,6 +65,12 @@ public class UserProfileService {
         }
     }
 
+    public ResponseEntity<?> getUserInfo(String email) {
+         
+        UserProfile userProfile = userProfileRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Profile not found"));
+        return ResponseEntity.ok(userProfile);
+    }
 
     public  ResponseEntity<?> getUserDetails(String userID) {
         Long userIdLong = Long.parseLong(userID);

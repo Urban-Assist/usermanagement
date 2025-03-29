@@ -34,4 +34,9 @@ public class UserProfileController {
     public ResponseEntity<UserProfileDTO> updateProfile(@RequestBody UserProfileDTO profileDTO) {
         return ResponseEntity.ok(userProfileService.updateProfile(profileDTO));
     }
+
+    @PostMapping("/getUserInfo")
+    public ResponseEntity<?> getUserInfo(@RequestBody String email) {
+        return ResponseEntity.ok(userProfileService.getUserInfo(email));
+    }
 }
