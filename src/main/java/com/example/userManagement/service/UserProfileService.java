@@ -15,10 +15,12 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 public class UserProfileService {
 
     private final UserProfileRepository userProfileRepository;
-    public ProviderProfileRepository providerProfileRepository;
+    private final ProviderProfileRepository providerProfileRepository;
 
-    public UserProfileService(UserProfileRepository userProfileRepository) {
+    public UserProfileService(UserProfileRepository userProfileRepository, 
+                              ProviderProfileRepository providerProfileRepository) {
         this.userProfileRepository = userProfileRepository;
+        this.providerProfileRepository = providerProfileRepository;
     }
 
     public UserProfileDTO getCurrentUserProfile() {
