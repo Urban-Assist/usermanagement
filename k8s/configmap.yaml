@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: user-management-config
 data:
- 
+  SERVER_PORT: "8083"
   SPRING_APPLICATION_NAME: "userManagement"
   SPRING_JPA_HIBERNATE_DDL_AUTO: "update"
   SPRING_JPA_SHOW_SQL: "true"
