@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: user-management
-        image: parthpatil01/user-management:latest
+        image: handyshare/user-management:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 8083
