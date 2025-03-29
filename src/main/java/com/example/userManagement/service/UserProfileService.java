@@ -9,6 +9,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 
 @Service
@@ -67,8 +70,8 @@ public class UserProfileService {
 
     public ResponseEntity<?> getUserInfo(String email) {
          
-        UserProfile userProfile = userProfileRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Profile not found"));
+        List<UserProfile> userProfile = userProfileRepository.findAll();
+               // .orElseThrow(() -> new RuntimeException("Profile not found"));
         return ResponseEntity.ok(userProfile);
     }
 

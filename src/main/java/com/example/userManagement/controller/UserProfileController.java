@@ -21,7 +21,7 @@ public class UserProfileController {
 
     @GetMapping("/details/{userID}")
     public ResponseEntity<?> getUserDetails(@PathVariable String userID) {
-        ResponseEntity<?> userProfileDTO = userProfileService.getUserDetails(userID);
+        UserProfileDTO userProfileDTO = userProfileService.getUserDetails(userID);
         return ResponseEntity.ok(userProfileDTO);
     }
 
@@ -31,7 +31,7 @@ public class UserProfileController {
     }
 
     @PutMapping
-    public ResponseEntity<UserProfileDTO> updateProfile(@RequestBody UserProfileDTO profileDTO) {
+    public ResponseEntity<?> updateProfile(@RequestBody UserProfileDTO profileDTO) {
         return ResponseEntity.ok(userProfileService.updateProfile(profileDTO));
     }
 
