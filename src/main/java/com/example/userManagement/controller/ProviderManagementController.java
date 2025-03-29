@@ -71,7 +71,7 @@ public class ProviderManagementController {
       return ResponseEntity.ok(providers);
   }
 
-  @PostMapping("/providerByEmail")  // Changed to POST
+  @GetMapping("/provider-info")  
   public ResponseEntity<?> getProviderByEmail(@RequestBody Map<String, String> request) {
       String email = request.get("email");
       logger.info("Provider email lookup request received: {}", email);
