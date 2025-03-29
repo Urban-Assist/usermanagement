@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-management
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-management
+  template:
+    metadata:
+      labels:
+        app: user-management
+    spec:
+      containers:
+      - name: user-management
+        image: handyshare/user-management:latest
+        imagePullPolicy: Always  # This ensures it pulls the latest image
+        ports:
+        - containerPort: 8083
+        envFrom:
+        - secretRef:
+            name: user-management-secrets
