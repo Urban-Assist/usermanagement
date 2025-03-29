@@ -1,9 +1,12 @@
 package com.example.userManagement.service;
 
 import com.example.userManagement.dto.UserProfileDTO;
+import com.example.userManagement.model.ProviderProfile;
 import com.example.userManagement.model.UserProfile;
+import com.example.userManagement.repository.ProviderProfileRepository;
 import com.example.userManagement.repository.UserProfileRepository;
 import org.springframework.beans.BeanUtils;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -12,6 +15,7 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 public class UserProfileService {
 
     private final UserProfileRepository userProfileRepository;
+    public ProviderProfileRepository providerProfileRepository;
 
     public UserProfileService(UserProfileRepository userProfileRepository) {
         this.userProfileRepository = userProfileRepository;
@@ -60,10 +64,11 @@ public class UserProfileService {
     }
 
 
-    public UserProfileDTO getUserDetails(String userID) {
-        UserProfile userProfile = userProfileRepository.findById(userID)
+    public  ResponseEntity<?> getUserDetails(String userID) {
+        Long userIdLong = Long.parseLong(userID);
+        ProviderProfile userProfile = providerProfileRepository.findById(userIdLong)
                 .orElseThrow(() -> new RuntimeException("Profile not found"));
-        return convertToDTO(userProfile);
+        return ResponseEntity.ok(userProfile);
     }
     private UserProfileDTO convertToDTO(UserProfile userProfile) {
         UserProfileDTO dto = new UserProfileDTO();

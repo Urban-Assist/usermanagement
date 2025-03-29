@@ -1,6 +1,7 @@
 package com.example.userManagement.controller;
 
 import com.example.userManagement.dto.UserProfileDTO;
+import com.example.userManagement.model.ProviderProfile;
 import com.example.userManagement.service.UserProfileService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,7 @@ public class UserProfileController {
 
     @GetMapping("/details/{userID}")
     public ResponseEntity<?> getUserDetails(@PathVariable String userID) {
-        UserProfileDTO userProfileDTO = userProfileService.getUserDetails(userID);
+        ResponseEntity<?> userProfileDTO = userProfileService.getUserDetails(userID);
         return ResponseEntity.ok(userProfileDTO);
     }
 
