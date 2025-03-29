@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
 
 @RestController
 @RequestMapping("/api/provider")
-@ComponentScan
+ 
 //@RequiredArgsConstructor
 public class ProviderManagementController {
    private static final Logger logger = LoggerFactory.getLogger(ProviderManagementController.class);
@@ -72,19 +72,13 @@ public class ProviderManagementController {
       Set<ProviderProfileDTO> providers = providerProfileService.getProvidersByService(service);
       return ResponseEntity.ok(providers);
   }
-  @GetMapping("/all")
-  public ResponseEntity<String> getAllProviders() {
-      logger.info("GET /api/provider/all endpoint hit!");  // Add this line
-      return ResponseEntity.ok("Hello world");
-  }
+
    @PostMapping
   public ResponseEntity<ProviderProfileDTO> createProviderProfile(@RequestParam String service) {
       System.out.println("Received name: " + service);
       ProviderProfileDTO profile = providerProfileService.createProviderProfile(service);
       return ResponseEntity.status(HttpStatus.CREATED).body(profile);
   }
-
-
 
 
   @PutMapping
@@ -94,7 +88,10 @@ public class ProviderManagementController {
   }
 
 
-
+  @GetMapping("/test")
+  public ResponseEntity<String> test() {
+      return ResponseEntity.ok("Test successful");
+  }
 
   // to do : end point to mark the provider as certified
   @PostMapping("/certify/{id}")
