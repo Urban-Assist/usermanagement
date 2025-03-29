@@ -20,7 +20,10 @@ public class UserProfileController {
         this.userProfileService = userProfileService;
     }
 
-    @GetMapping("/details/{userID}")
+    @GetMapping("/details/{userID}") //throws details from the user-profile table 
+    /*
+     * in some services we need the id from the user-profile so i (vaibhavkumar Patel) created this service
+     */
     public ResponseEntity<?> getUserDetails(@PathVariable String userID) {
         UserProfileDTO userProfileDTO = userProfileService.getUserDetails(userID);
         return ResponseEntity.ok(userProfileDTO);
