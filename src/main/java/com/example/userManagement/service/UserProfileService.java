@@ -70,8 +70,8 @@ public class UserProfileService {
 
     public ResponseEntity<?> getUserInfo(String email) {
          
-        List<UserProfile> userProfile = userProfileRepository.findAll();
-               // .orElseThrow(() -> new RuntimeException("Profile not found"));
+        UserProfile userProfile = userProfileRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Profile not found"));
         return ResponseEntity.ok(userProfile);
     }
 
