@@ -72,8 +72,9 @@ public class ProviderManagementController {
       Set<ProviderProfileDTO> providers = providerProfileService.getProvidersByService(service);
       return ResponseEntity.ok(providers);
   }
- @GetMapping("/all")
+  @GetMapping("/all")
   public ResponseEntity<String> getAllProviders() {
+      logger.info("GET /api/provider/all endpoint hit!");  // Add this line
       return ResponseEntity.ok("Hello world");
   }
    @PostMapping
