@@ -8,7 +8,7 @@
 [![License](https://img.shields.io/badge/license-Apache%202.0-red.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 
-<img src="https://cdn3.iconfinder.com/data/icons/flat-pro-user-management-set-4/32/user-menu-1024.png" alt="User Management Service Logo" width="200"/>
+<img src="https://via.placeholder.com/200?text=User+Management" alt="User Management Service Logo" width="200"/>
 
 *Comprehensive user profile and provider management for Urban Assist platform*
 
@@ -158,35 +158,227 @@ kubectl get pods
 
 ## 📡 API Endpoints
 
+> **Authentication Note**: For authenticated endpoints, include the JWT token in the Authorization header:
+> ```
+> Authorization: Bearer <your-jwt-token>
+> ```
+
 ### User Profile Management
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/profile` | GET | Get current user profile |
-| `/api/profile` | PUT | Update user profile |
-| `/api/profile/details/{userID}` | GET | Get user details by ID |
-| `/api/profile/getUserInfo` | POST | Get user info by email |
+| Endpoint | Method | Description | Authenticated |
+|----------|--------|-------------|---------------|
+| `/api/profile` | GET | Get current user profile | ✅ |
+| `/api/profile` | PUT | Update user profile | ✅ |
+| `/api/profile/details/{userID}` | GET | Get user details by ID | ✅ |
+| `/api/profile/getUserInfo` | POST | Get user info by email | ✅ |
+
+<details>
+<summary>📋 Request/Response Examples</summary>
+
+#### Get Current User Profile
+```http
+GET /api/profile
+Authorization: Bearer <your-jwt-token>
+
+Response:
+{
+    "email": "royep11756@deenur.com",
+    "firstName": "Robert",
+    "lastName": "Jr",
+    "phoneNumber": null,
+    "role": "user",
+    "profilePicUrl": null,
+    "address": null
+}
+```
+
+#### Update User Profile
+```http
+PUT /api/profile
+Authorization: Bearer <your-jwt-token>
+Content-Type: application/json
+
+Request:
+{
+    "firstName": "Robert",
+    "lastName": "Jr",
+    "phoneNumber": null,
+    "email":"royep11756@deenur.com", //mandatory
+    "address": {
+        "state":"ns"
+    }
+}
+
+Response:
+{
+    "email": "royep11756@deenur.com",
+    "firstName": "Robert",
+    "lastName": "Jr",
+    "phoneNumber": null,
+    "role": null,
+    "profilePicUrl": null,
+    "address": {
+        "address": null,
+        "pincode": null,
+        "city": null,
+        "province": null
+    }
+}
+```
+
+
+#### Get User details By ID 
+```http
+Request:
+GET /api/profile/details/2
+Authorization: Bearer <your-jwt-token>
+Content-Type: application/json
+
+Response:
+{
+    "email": "royep11756@deenur.com",
+    "firstName": "Robert",
+    "lastName": "Jr",
+    "phoneNumber": null,
+    "role": null,
+    "profilePicUrl": null,
+    "address": null
+}
+```
+
+
+#### Get User user info from the Email
+```http
+Request:
+GET /api/profile/getUserInfo
+Authorization: Bearer <your-jwt-token>
+Content-Type: application/json
+Request:
+{
+    "email":"vaibhavpatel9196@gmail.com"
+}
+Response:
+{
+    "id": 1,
+    "email": "vaibhavpatel9196@gmail.com",
+    "firstName": "vaibhav",
+    "lastName": "patel",
+    "phoneNumber": null,
+    "role": "admin",
+    "profilePicUrl": null,
+    "address": null
+}
+```
+</details>
 
 ### Provider Management
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/provider` | GET | Get provider profile |
-| `/api/provider` | POST | Create provider profile |
-| `/api/provider` | PUT | Update provider profile |
-| `/api/provider/service` | GET | Get providers by service |
-| `/api/provider/certify/{id}` | POST | Certify a provider |
+| Endpoint | Method | Description | Authenticated |
+|----------|--------|-------------|---------------|
+| `/api/provider` | GET | Get provider profile | ✅ |
+| `/api/provider` | POST | Create provider profile | ✅ |
+| `/api/provider` | PUT | Update provider profile | ✅ |
+| `/api/provider/service` | GET | Get providers by service | ✅ |
+| `/api/provider/certify/{id}` | POST | Certify a provider | ✅ |
+
+<details>
+<summary>📋 Request/Response Examples</summary>
+
+#### Create Provider Profile
+```http
+POST /api/provider
+Authorization: Bearer <your-jwt-token>
+Content-Type: application/json
+
+Request:
+{
+    "businessName": "Home Services Pro",
+    "services": ["cleaning", "plumbing"],
+    "experience": 5,
+    "certifications": ["Master Plumber"],
+    "serviceArea": ["New York", "Brooklyn"]
+}
+
+Response:
+{
+    "id": "456",
+    "status": "PENDING_VERIFICATION",
+    "profile": {
+        ...provider details
+    }
+}
+```
+</details>
 
 ### Availability Management
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/availabilities` | POST | Create availability |
-| `/api/availabilities/get` | POST | Get availabilities |
-| `/api/availabilities/{id}` | DELETE | Delete availability |
+| Endpoint | Method | Description | Authenticated |
+|----------|--------|-------------|---------------|
+| `/api/availabilities` | POST | Create availability | ✅ |
+| `/api/availabilities/get` | POST | Get availabilities | ✅ |
+| `/api/availabilities/{id}` | DELETE | Delete availability | ✅ |
+
+<details>
+<summary>📋 Request/Response Examples</summary>
+
+#### Create Availability
+```http
+POST /api/availabilities
+Authorization: Bearer <your-jwt-token>
+Content-Type: application/json
+
+Request:
+{
+    "providerId": "456",
+    "startTime": "2024-02-20T09:00:00",
+    "endTime": "2024-02-20T17:00:00",
+    "slotDuration": 60
+}
+
+Response:
+{
+    "message": "Availability created successfully",
+    "slots": [
+        {
+            "id": "789",
+            "startTime": "2024-02-20T09:00:00",
+            "endTime": "2024-02-20T10:00:00",
+            "status": "AVAILABLE"
+        },
+        ...more slots
+    ]
+}
+```
+</details>
 
 ### Booking Management
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/booking/success` | POST | Handle successful booking |
-| `/api/booking` | GET | Get bookings |
+| Endpoint | Method | Description | Authenticated |
+|----------|--------|-------------|---------------|
+| `/api/booking/success` | POST | Handle successful booking | ✅ |
+| `/api/booking` | GET | Get bookings | ✅ |
+
+<details>
+<summary>📋 Request/Response Examples</summary>
+
+#### Get Bookings
+```http
+GET /api/booking
+Authorization: Bearer <your-jwt-token>
+
+Response:
+{
+    "bookings": [
+        {
+            "id": "789",
+            "providerId": "456",
+            "userId": "123",
+            "service": "cleaning",
+            "startTime": "2024-02-20T09:00:00",
+            "status": "CONFIRMED",
+            "price": 75.00
+        },
+        ...more bookings
+    ]
+}
+```
+</details>
 
 ---
 
