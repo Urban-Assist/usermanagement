@@ -8,7 +8,7 @@
 [![License](https://img.shields.io/badge/license-Apache%202.0-red.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 
-<img src="https://images.pexels.com/photos/256219/pexels-photo-256219.jpeg?w=600&h=600&dpr=1" alt="User Management Service Logo" width="200"/>
+<img src="https://cdn3.iconfinder.com/data/icons/flat-pro-user-management-set-4/32/user-menu-1024.png" alt="User Management Service Logo" width="200"/>
 
 *Comprehensive user profile and provider management for Urban Assist platform*
 
