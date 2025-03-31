@@ -492,10 +492,10 @@ Content-Type: application/json
 
 Request:
 {
-    "providerId": "456",
+    "providerEmail": "xyz@trum.com",
     "startTime": "2024-02-20T09:00:00",
     "endTime": "2024-02-20T17:00:00",
-    "slotDuration": 60
+    "service": plumbing
 }
 
 Response:
@@ -511,6 +511,46 @@ Response:
         ...more slots
     ]
 }
+```
+
+#### Get Availability
+```http
+POST /api/availabilities/get
+Authorization: Bearer <your-jwt-token>
+Content-Type: application/json
+
+Request:
+{
+    "id":1,
+     "service":"plumbing",
+     "email":"2ypbj@ptct.net"
+
+}
+
+Response:
+[
+    {
+        "id": 5,
+        "startTime": "2025-03-30T11:00:00Z",
+        "endTime": "2025-03-30T12:00:00Z",
+        "providerEmail": "2ypbj@ptct.net",
+        "service": "plumbing"
+    },
+    {
+        "id": 6,
+        "startTime": "2025-03-28T18:45:00Z",
+        "endTime": "2025-03-28T19:45:00Z",
+        "providerEmail": "2ypbj@ptct.net",
+        "service": "plumbing"
+    },
+    {
+        "id": 7,
+        "startTime": "2025-03-31T12:30:00Z",
+        "endTime": "2025-03-31T13:30:00Z",
+        "providerEmail": "2ypbj@ptct.net",
+        "service": "plumbing"
+    }
+]
 ```
 </details>
 
