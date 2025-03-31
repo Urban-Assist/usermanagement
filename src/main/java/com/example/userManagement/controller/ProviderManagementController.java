@@ -68,7 +68,7 @@ public class ProviderManagementController {
 
   @GetMapping("/service")
   public ResponseEntity<Set<ProviderProfileDTO>> getProvidersByService(@RequestParam String service ) {
-      System.out.println("HI this is sajid"+service);
+     
       Set<ProviderProfileDTO> providers = providerProfileService.getProvidersByService(service);
       return ResponseEntity.ok(providers);
   }
@@ -89,8 +89,7 @@ public class ProviderManagementController {
 
  
 
-  // to do : end point to mark the provider as certified
-  @PostMapping("/certify/{id}")
+   @PostMapping("/certify/{id}")
   public ResponseEntity<?> certifyProvider(
           @PathVariable Long id,
           @RequestHeader("Authorization") String authHeader) {

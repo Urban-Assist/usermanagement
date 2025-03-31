@@ -273,39 +273,205 @@ Response:
 ### Provider Management
 | Endpoint | Method | Description | Authenticated |
 |----------|--------|-------------|---------------|
-| `/api/provider` | GET | Get provider profile | ✅ |
-| `/api/provider` | POST | Create provider profile | ✅ |
-| `/api/provider` | PUT | Update provider profile | ✅ |
+| `/api/provider/{id}/service={service name}` | GET | Get Provider Profile By ID and Service | ✅ |
+|`/api/provider`|PUT|Update Provider Profile|✅|
 | `/api/provider/service` | GET | Get providers by service | ✅ |
 | `/api/provider/certify/{id}` | POST | Certify a provider | ✅ |
+|`/api/provider/verified-providers`|GET|Get the list of certified providers|✅|
 
 <details>
 <summary>📋 Request/Response Examples</summary>
 
-#### Create Provider Profile
+### Get provider Profile
 ```http
+Request:
+GET /api/provider/profile/1?service=plumbing
+Authorization: Bearer <your-jwt-token>
+Content-Type: application/json
+
+Response:
+{
+    "id": 1,
+    "firstName": "Emily",
+    "lastName": "Patel",
+    "description": "🔧 Experienced Plumbing Service Provider | Connecting Top Plumbing Professionals with Homeowners in Need 🏠\n\nWith years of expertise in the plumbing industry, we bring a trusted platform that seamlessly matches skilled plumbing professionals with homeowners and businesses seeking quality service. Our application offers a user-friendly solution to help consumers quickly connect with experienced, vetted plumbers in their local area.\n\nWhether it's emergency repairs, routine maintenance, or large-scale plumbing installations, our platform ensures that both service providers and customers can engage with confidence. We prioritize trust, reliability, and customer satisfaction, creating a smooth, hassle-free experience for all parties involved.",
+    "certified": true,
+    "profilePic": "https://firebasestorage.googleapis.com/v0/b/ecommerce-2f3cc.appspot.com/o/profilePics%2FScreenshot%202025-03-29%20at%2012.00.30%E2%80%AFPM.png?alt=media&token=18321bde-f83c-4515-b0fc-32dbb38c031a",
+    "stars": 0,
+    "address": "Halifax, Nova scotia",
+    "price": "20",
+    "workImages": [
+        "https://firebasestorage.googleapis.com/v0/b/ecommerce-2f3cc.appspot.com/o/workImages%2FScreenshot%202025-03-29%20at%202.21.47%E2%80%AFPM.png?alt=media&token=9a731f4f-ebc7-499f-92c5-628d6c01f000",
+        "https://firebasestorage.googleapis.com/v0/b/ecommerce-2f3cc.appspot.com/o/workImages%2FScreenshot%202025-03-29%20at%202.22.57%E2%80%AFPM.png?alt=media&token=7a0f14d1-9a75-4ea7-a347-1da6a0f29821",
+        "https://firebasestorage.googleapis.com/v0/b/ecommerce-2f3cc.appspot.com/o/workImages%2FScreenshot%202025-03-29%20at%202.23.53%E2%80%AFPM.png?alt=media&token=265a44db-2995-464f-a7a6-9256ff54b872"
+    ],
+    "testimonials": [],
+    "phoneNumber": "+1 9999999999",
+    "email": "2ypbj@ptct.net",
+    "linkedin": "#",
+    "service": "plumbing"
+}
+```
+
+
+#### Update Provider Profile
+```htpp
+Request
 POST /api/provider
 Authorization: Bearer <your-jwt-token>
 Content-Type: application/json
 
 Request:
-{
-    "businessName": "Home Services Pro",
-    "services": ["cleaning", "plumbing"],
-    "experience": 5,
-    "certifications": ["Master Plumber"],
-    "serviceArea": ["New York", "Brooklyn"]
+{ 
+      "firstName":"Kira",
+      "lastName":"Damor",
+      "description":null,
+      "certified":false,
+      "profilePic":null,
+      "stars":null,
+      "address":null,
+      "price":90,
+      "workImages":null,
+      "testimonials":null,
+      "phoneNumber":null,
+      "email":"2ypbj@ptct.net",
+      "linkedin":null,
+      "service":"plumbing"
 }
+
 
 Response:
 {
-    "id": "456",
-    "status": "PENDING_VERIFICATION",
-    "profile": {
-        ...provider details
-    }
+    "id": 1,
+    "firstName": "Kira",
+    "lastName": "Damor",
+    "description": null,
+    "certified": false,
+    "profilePic": null,
+    "stars": 0,
+    "address": null,
+    "price": "90",
+    "workImages": null,
+    "testimonials": null,
+    "phoneNumber": null,
+    "email": "2ypbj@ptct.net",
+    "linkedin": null,
+    "service": "plumbing"
 }
 ```
+#### Get Provider by service category
+```http
+POST /api/provider/service?service=plumbing
+Authorization: Bearer <your-jwt-token>
+Content-Type: application/json
+ 
+
+Response:
+[
+    {
+        "id": 1,
+        "firstName": "Emily",
+        "lastName": "Patel",
+        "description": "🔧 Experienced Plumbing Service Provider | Connecting Top Plumbing Professionals with Homeowners in Need 🏠\n\nWith years of expertise in the plumbing industry, we bring a trusted platform that seamlessly matches skilled plumbing professionals with homeowners and businesses seeking quality service. Our application offers a user-friendly solution to help consumers quickly connect with experienced, vetted plumbers in their local area.\n\nWhether it's emergency repairs, routine maintenance, or large-scale plumbing installations, our platform ensures that both service providers and customers can engage with confidence. We prioritize trust, reliability, and customer satisfaction, creating a smooth, hassle-free experience for all parties involved.",
+        "certified": true,
+        "profilePic": "https://firebasestorage.googleapis.com/v0/b/ecommerce-2f3cc.appspot.com/o/profilePics%2FScreenshot%202025-03-29%20at%2012.00.30%E2%80%AFPM.png?alt=media&token=18321bde-f83c-4515-b0fc-32dbb38c031a",
+        "stars": 0,
+        "address": "Halifax, Nova scotia",
+        "price": "20",
+        "workImages": [
+            "https://firebasestorage.googleapis.com/v0/b/ecommerce-2f3cc.appspot.com/o/workImages%2FScreenshot%202025-03-29%20at%202.21.47%E2%80%AFPM.png?alt=media&token=9a731f4f-ebc7-499f-92c5-628d6c01f000",
+            "https://firebasestorage.googleapis.com/v0/b/ecommerce-2f3cc.appspot.com/o/workImages%2FScreenshot%202025-03-29%20at%202.22.57%E2%80%AFPM.png?alt=media&token=7a0f14d1-9a75-4ea7-a347-1da6a0f29821",
+            "https://firebasestorage.googleapis.com/v0/b/ecommerce-2f3cc.appspot.com/o/workImages%2FScreenshot%202025-03-29%20at%202.23.53%E2%80%AFPM.png?alt=media&token=265a44db-2995-464f-a7a6-9256ff54b872"
+        ],
+        "testimonials": [],
+        "phoneNumber": "+1 9999999999",
+        "email": "2ypbj@ptct.net",
+        "linkedin": "#",
+        "service": "plumbing"
+    }
+]
+```
+
+### Certify a provider
+#### Only the admin users can certify the providers
+```http
+ 
+POST /api/provider/certify/3
+Authorization: Bearer <your-jwt-token> 
+Content-Type: application/json
+ 
+Response:
+Provider certified successfully
+```
+
+#### Get list of certified providers
+
+```http
+
+GET /api/provider/verified-providers	
+Authorization: Bearer <your-jwt-token> 
+Content-Type: application/json
+
+Response:
+[
+    {
+        "id": 3,
+        "firstName": "Emily",
+        "lastName": "Patel",
+        "description": "No description available",
+        "certified": true,
+        "profilePic": "https://wartapoin.com/wp-content/uploads/2023/06/foto-profil-wa-gabut-keren-4.jpg",
+        "stars": 0,
+        "address": "Not specified",
+        "price": "0",
+        "workImages": [],
+        "testimonials": [],
+        "phoneNumber": "Not provided",
+        "email": "2ypbj@ptct.net",
+        "linkedin": "#",
+        "service": "house cleaning"
+    },
+    {
+        "id": 4,
+        "firstName": "Kevin",
+        "lastName": "Parmar",
+        "description": "🔌 Experienced Electrician | Residential & Commercial Electrical Solutions\n\nWith over 7 years of hands-on experience in electrical installation, repair, and maintenance, I specialize in providing top-tier electrical services for both residential and commercial clients. Skilled in wiring, circuit troubleshooting, lighting installation, and electrical safety, I ensure every job is completed with precision and in compliance with industry standards.\n\nMy expertise includes:\n\nElectrical system design and installation\n\nFault detection and diagnostics\n\nUpgrading panels and electrical systems\n\nEnergy-efficient lighting solutions",
+        "certified": true,
+        "profilePic": "https://firebasestorage.googleapis.com/v0/b/ecommerce-2f3cc.appspot.com/o/profilePics%2FScreenshot%202025-03-29%20at%202.29.19%E2%80%AFPM.png?alt=media&token=65662188-9c38-4854-a259-74252c55da7a",
+        "stars": 0,
+        "address": "Dartmouth, Nova scotia",
+        "price": "35",
+        "workImages": [
+            "https://firebasestorage.googleapis.com/v0/b/ecommerce-2f3cc.appspot.com/o/workImages%2FScreenshot%202025-03-29%20at%202.30.19%E2%80%AFPM.png?alt=media&token=5579b084-55da-49e6-bdcf-87b72074df59",
+            "https://firebasestorage.googleapis.com/v0/b/ecommerce-2f3cc.appspot.com/o/workImages%2FScreenshot%202025-03-29%20at%202.31.13%E2%80%AFPM.png?alt=media&token=9ccc9c4b-88af-4cc4-a81d-6f2e34327dea"
+        ],
+        "testimonials": [],
+        "phoneNumber": "Not provided",
+        "email": "vi1gy@ptct.net",
+        "linkedin": "#",
+        "service": "electrician"
+    },
+    {
+        "id": 6,
+        "firstName": "john",
+        "lastName": "abraham",
+        "description": "Hi I am john abraham, I am in House cleaning business since 10 years",
+        "certified": true,
+        "profilePic": "https://wartapoin.com/wp-content/uploads/2023/06/foto-profil-wa-gabut-keren-4.jpg",
+        "stars": 0,
+        "address": "Halifax",
+        "price": "150",
+        "workImages": [],
+        "testimonials": [],
+        "phoneNumber": "+1 902 486 2565",
+        "email": "dokegyju@thetechnext.net",
+        "linkedin": "#",
+        "service": "house cleaning"
+    }
+]
+
+```
+
 </details>
 
 ### Availability Management
