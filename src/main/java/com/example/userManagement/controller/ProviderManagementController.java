@@ -180,5 +180,4 @@ public class ProviderManagementController {
 
 
 
-  // to do : end point to delete the provider profile
-}
+ }
