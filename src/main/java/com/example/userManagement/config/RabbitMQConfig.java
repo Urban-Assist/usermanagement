@@ -34,7 +34,7 @@ public class RabbitMQConfig {
 
     @Bean
     public Queue userProfileQueue() {
-        // Declare the queue with the name from the configuration
-        return new Queue("${rabbitmq.queue.name}", true);
+        // Actively declare the queue with the name from the configuration
+        return new Queue("user_profile_queue", true); // Replace with the actual queue name if not using placeholders
     }
 }
